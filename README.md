@@ -27,14 +27,14 @@ Your deployment must meet the following criteria:
 
 ### Guidebook on completing the assignment
 - Your implementation should be commited to your own public git repository, including any IaC, documentation, etc (fork this repository)
-- Create dockerfiles to match the deployment requirements
+- Create dockerfile to match the deployment requirements
 - Create all resources using IaC tools
-- Use [Amazon Elastic Container Registry](https://us-east-1.console.aws.amazon.com/ecr/get-started) to push the images to a private repository
-- Create a [Kubernetes](https://us-east-1.console.aws.amazon.com/eks/home) cluster
-- Use helm to deploy the service(s)
+- Use [Amazon Elastic Container Registry](https://us-east-1.console.aws.amazon.com/ecr/get-started) to push the image to a private repository
+- Create a [Kubernetes](https://us-east-1.console.aws.amazon.com/eks/home) cluster and deploy the service to the cluster
 - Create a MongoDB instance in the Kubernetes cluster (do not use any Mongo service such as DocumentDB) and make it reachable for the deployed service, update the `MONGODB_URL` environment variable to match the mongodb connection url 
-- Expose the services to the internet using AWS Load Balancer, AWS Elastic IP, and Network Interface
+- Expose the service to the internet using AWS Load Balancer, AWS Elastic IP, and Network Interface
 - Document the deployment steps and the resources created in the deployment as clear and detailed as possible
+- **Provide a publicly accessible URL of the service**
 
 ### Bonus Points (Optional)
 Bonus points are optional, but will be considered as a plus if implemented. Please prioritize completing the main requirements before investing time in the bonus section.
@@ -50,9 +50,9 @@ You may choose to implement one or more of the following:
 
 ### How will the assignment be evaluated
 When evaluating the assignment, we will consider the following:
-- The deployment plan and the resources are created and working as expected. We will trigger the API and expect a valid response
+- The deployment plan and the resources are created and working as expected. We will trigger the API using the supplied URL and expect a valid response
 - The documentation is clear and detailed, we will follow the documentation to understand the deployment process
-- Best practicies are followed across all functional and non-functional requirements (for example: security, cost optimization, reliability, etc)
+- Best practices are followed across all functional and non-functional requirements (for example: security, cost optimization, reliability, etc)
 
 ### General Notes
 - For performing the assignment, you will be given with AWS credentials (console and programmatic) to a dedicated account, **DO NOT COMMIT THEM IN THE CODE**

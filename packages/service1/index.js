@@ -30,6 +30,11 @@ async function connectToDatabase() {
 async function main() {
     const {counterCollection, orderCollection} = await connectToDatabase();
 
+    app.get("/orders", async (req, res) => {
+        const orders = await orderCollection.find({}).toArray();
+        res.json(orders);
+    });
+
     app.delete("/orders/:id", async (req, res) => {
         await orderCollection.deleteOne({_id: Number(req.params.id)});
         res.send(`Order number ${req.params.id} deleted successfully.`);
@@ -50,7 +55,7 @@ async function main() {
     });
 
     app.listen(port, () => {
-        console.log(`DevOps assignment service1 app listening on port ${port}`);
+        console.log(`DevOps assignment service app listening on port ${port}`);
     });
 }
 
