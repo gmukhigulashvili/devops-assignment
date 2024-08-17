@@ -8,7 +8,7 @@ RUN groupadd -g 1002 appuser && useradd -u 1002 -g appuser -m appuser
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files from the service1 directory
-COPY packages/service1/package*.json .
+COPY package*.json .
 
 # Install the dependencies
 RUN npm install
