@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/gmukhigulashvili/devops-assignment.git
         revision: master
         files:
-          - path: "helm/values/helm-chart/**/deployment.yaml"
+          - path: "helm/values/helm-charts/**/deployment.yaml"
   template:
     metadata:
       name: '{{"{{"}}name{{"}}"}}'
@@ -57,8 +57,8 @@ spec:
           helm:
             releaseName: '{{"{{"}}name{{"}}"}}'
             valueFiles:
-              - $values/helm/values/helm-chart/{{"{{"}}name{{"}}"}}/values.yaml
-              - $values/helm/values/helm-chart/{{"{{"}}name{{"}}"}}/secrets.enc.yaml
+              - $values/helm/values/helm-charts/{{"{{"}}name{{"}}"}}/values.yaml
+              - $values/helm/values/helm-charts/{{"{{"}}name{{"}}"}}/secrets.enc.yaml
           repoURL: '{{"{{"}}repoURL{{"}}"}}'
           targetRevision: '{{"{{"}}targetRevision{{"}}"}}'
         - ref: values
