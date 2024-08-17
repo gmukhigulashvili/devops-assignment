@@ -1,9 +1,9 @@
-name: Build and Push Docker
+name: Build and Push Docker Image to Private ECR
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-push:
@@ -20,6 +20,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
       with:
+        region: ${{ secrets.AWS_REGION }}
         registry: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
     - name: Build Docker image
