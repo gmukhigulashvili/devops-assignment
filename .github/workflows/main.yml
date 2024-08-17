@@ -9,7 +9,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       
     steps:
     - name: Checkout code
@@ -32,29 +33,21 @@ jobs:
     - name: Get commit hash
       id: get-commit-hash
       run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
+      
     - name: Get timestamp
       id: get-timestamp
       run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
 
     - name: Build Docker image
       id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
         
     - name: Tag Docker image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
 
     - name: Push Docker image to ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG       
