@@ -35,7 +35,7 @@ spec:
           repoURL: "https://gitlab.apptrium.io/api/v4/projects/630/packages/helm/stable"
           targetRevision: 1.5.*
         - ref: values
-          repoURL: "https://gitlab.apptrium.io/devops/cd/icp-dev.git"
+          repoURL: "https://github.com/gmukhigulashvili/devops-assignment.git"
           targetRevision: master
       destination:
         server: https://kubernetes.default.svc
