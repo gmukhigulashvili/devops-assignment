@@ -43,7 +43,7 @@ jobs:
         IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
-        docker build $ECR_REGISTRY/dev-vi-ecr:latest
+        docker build -t $ECR_REGISTRY/dev-vi-ecr:latest
 
     - name: Push Docker image to ECR
       run: |
