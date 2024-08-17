@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    env:
+      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       
     steps:
     - name: Checkout code
@@ -37,23 +40,15 @@ jobs:
 
     - name: Build Docker image
       id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
         
     - name: Tag Docker image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
 
     - name: Push Docker image to ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG     
