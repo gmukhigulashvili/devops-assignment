@@ -1,0 +1,11 @@
+---
+name: vi-dev-pull-secret
+contour: vi-dev
+hostsuffix: vi-dev
+namespace: vi-dev
+version: latest
+
+groups:
+  main:
+    app: {}
+
