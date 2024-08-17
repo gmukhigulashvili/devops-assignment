@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vi-dev
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/gmukhigulashvili/devops-assignment.git
+        revision: master
+        files:
+          - path: "helm/values/vi-dev/**/values.yaml"
+  template:
+    metadata:
+      name: '{{"{{"}}name{{"}}"}}'
+    spec:
+      project: default
+      revisionHistoryLimit: 5
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - applyOutOfSyncOnly=true
+      sources:
+        - chart: app
+          helm:
+            releaseName: '{{"{{"}}name{{"}}"}}'
+            valueFiles:
+              - $values/helm/values/vi-dev/{{"{{"}}name{{"}}"}}/values.yaml
+              - $values/helm/values/vi-dev/{{"{{"}}name{{"}}"}}/version.yaml
+              - $values/helm/values/vi-dev/{{"{{"}}name{{"}}"}}/secrets.enc.yaml
+          repoURL: "https://gitlab.apptrium.io/api/v4/projects/630/packages/helm/stable"
+          targetRevision: 1.5.*
+        - ref: values
+          repoURL: "https://gitlab.apptrium.io/devops/cd/icp-dev.git"
+          targetRevision: master
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: vi-dev

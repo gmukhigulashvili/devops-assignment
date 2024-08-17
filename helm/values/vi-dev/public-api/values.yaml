@@ -1,0 +1,69 @@
+---
+name: devops-demo
+namespace: vi-dev
+contour: vi-dev
+hostsuffix: vi-dev
+version: REPLACE
+
+imagePullSecrets:
+  - name: gitlab-registry
+
+groups:
+  main:
+    apps:
+      devops-demo:
+        strategyType: RollingUpdate
+        reloader: true
+        image: registry.gitlab.apptrium.io/invent/identity/identity-operator
+        secret:
+          CacheSync__ConfigMapNamespace: iam
+        targetport: 3000
+        dapr:
+          enabled: false
+        daprTracing:
+          enabled: false
+        probes: true
+        probe:
+          liveness: /ping
+          readiness: /health
+          startup: /health
+        resources:
+          requests:
+            cpu: 250m
+            memory: 500Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+serviceAccount:
+  enabled: true
+  permissions:
+    - apiGroups:
+        - ""
+      resources:
+        - pods
+      verbs:
+        - get
+        - list
+        - update
+    - apiGroups:
+        - ""
+      resources:
+        - services
+      verbs:
+        - get
+        - list
+        - update
+    - apiGroups:
+        - ""
+      resources:
+        - pods/log
+      verbs:
+        - get
+        - list
+        - update
+    - apiGroups:
+        - ""
+      resources:
+        - configmaps
+      verbs:
+        - get
