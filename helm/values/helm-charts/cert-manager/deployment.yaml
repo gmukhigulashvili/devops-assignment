@@ -1,6 +1,6 @@
 ---
 name: cert-manager
 namespace: service
-repoURL: https://kubernetes.github.io/ingress-nginx
-targetRevision: 4.6.0
-chart: ingress-nginx
+repoURL: https://charts.jetstack.io
+targetRevision: 1.15.3
+chart: cert-manager

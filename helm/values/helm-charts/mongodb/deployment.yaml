@@ -1,6 +1,6 @@
 ---
-name: mongo
+name: mongodb
 namespace: service
-repoURL: https://kubernetes.github.io/ingress-nginx
-targetRevision: 4.6.0
-chart: ingress-nginx
+repoURL: https://charts.bitnami.com/bitnami
+targetRevision: 15.6.19
+chart: mongodb
