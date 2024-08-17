@@ -8,9 +8,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
-      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
     steps:
     - name: Checkout code
@@ -40,15 +37,23 @@ jobs:
 
     - name: Build Docker image
       id: build-image
+      env:
+        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+        ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
         
     - name: Tag Docker image
-
+      env:
+        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+        ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
       run: |
         docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
 
     - name: Push Docker image to ECR
+      env:
+        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+        ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
       run: |
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG     
