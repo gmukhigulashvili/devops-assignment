@@ -9,9 +9,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
-        
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -31,25 +30,22 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Get commit hash
-      id: get-commit-hash
-      run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
-      
+      run: echo "commit_hash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
     - name: Get timestamp
-      id: get-timestamp
-      run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
+      run: echo "timestamp=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
 
     - name: Build Docker image
-      id: build-image
-      run: |
-        docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
-        
+      run: docker build -t $ECR_REGISTRY/dev-vi-ecr:$commit_hash-$timestamp .
+
     - name: Tag Docker image
-      run: |
-        docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
+      run: docker tag $ECR_REGISTRY/dev-vi-ecr:$commit_hash-$timestamp $ECR_REGISTRY/dev-vi-ecr:latest 
 
     - name: Push Docker image to ECR
       run: |
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
-        docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG       
+        docker push $ECR_REGISTRY/dev-vi-ecr:$commit_hash-$timestamp
 
-
+    - name: Log out from Docker
+      if: always()
+      run: docker logout
