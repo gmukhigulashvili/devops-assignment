@@ -14,7 +14,7 @@ COPY packages/service1/package*.json .
 RUN npm install
 
 # Copy the rest of the service1 application code
-COPY packages/service1 /app
+COPY . /app
 
 # Change ownership of the app directory to the non-root user
 RUN chown -R appuser:appuser /app
