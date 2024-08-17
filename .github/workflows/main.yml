@@ -35,7 +35,7 @@ jobs:
       id: get-timestamp
       run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
 
-    - name: Build, tag, and push the image to Amazon ECR
+    - name: Build Docker image
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -45,6 +45,9 @@ jobs:
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
         
     - name: Tag Docker image
+      env:
+        ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
 
