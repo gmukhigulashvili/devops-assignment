@@ -9,9 +9,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
-      
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -40,11 +40,11 @@ jobs:
 
     - name: Build Docker image
       id: build-image
-
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
         
     - name: Tag Docker image
+
       run: |
         docker tag $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG $ECR_REGISTRY/dev-vi-ecr:latest 
 
