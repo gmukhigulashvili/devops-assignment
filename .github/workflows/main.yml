@@ -43,11 +43,11 @@ jobs:
         IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
         docker build -t $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG
+        docker build $ECR_REGISTRY/dev-vi-ecr:latest
 
     - name: Push Docker image to ECR
       run: |
-        docker push 423067824323.dkr.ecr.eu-west-1.amazonaws.com/dev-vi-ecr:latest
-        docker push 423067824323.dkr.ecr.eu-west-1.amazonaws.com/dev-vi-ecr:${{ github.sha }}           
+        docker push $ECR_REGISTRY/dev-vi-ecr:latest
+        docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG       
 
 
