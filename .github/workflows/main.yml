@@ -57,4 +57,20 @@ jobs:
       run: |
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG     
-   
+
+    - name: Clone vi-values repository
+      env:
+        PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/vi-values.git
+        cd vi-values/app1
+        echo "version: ${{ github.sha }}" > version.yaml
+
+    - name: Commit and push changes
+      run: |
+        cd vi-values
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add app1/version.yaml
+        git commit -m "Update version.yaml with commit SHA ${{ github.sha }}"
+        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/vi-values.git HEAD:main
