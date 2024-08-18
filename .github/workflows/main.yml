@@ -61,8 +61,10 @@ jobs:
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG     
 
     - name: Update version.yaml
+      env:
+        IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
       run: |
-        echo "version: ${{ github.sha }}" > helm/values/vi-dev/devops-demo/version.yaml
+        echo "version: $IMAGE_TAG " > helm/values/vi-dev/devops-demo/version.yaml
 
     - name: Commit and push changes
       env:
