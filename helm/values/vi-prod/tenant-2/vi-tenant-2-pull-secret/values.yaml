@@ -1,8 +1,8 @@
 ---
-name: vi-dev-pull-secret
+name: vi-tenant-2-pull-secret
 contour: vi-dev
 hostsuffix: vi-dev
-namespace: vi-dev
+namespace: vi-prod-tenant-2
 version: latest
 
 groups:

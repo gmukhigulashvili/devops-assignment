@@ -1,0 +1,43 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vi-prod-tenant-1
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/gmukhigulashvili/devops-assignment.git
+        revision: master
+        files:
+          - path: "helm/values/vi-prod/tenant-1/**/values.yaml"
+  template:
+    metadata:
+      name: '{{"{{"}}name{{"}}"}}'
+    spec:
+      project: default
+      revisionHistoryLimit: 5
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - applyOutOfSyncOnly=true
+      sources:
+        - chart: app
+          helm:
+            releaseName: '{{"{{"}}name{{"}}"}}'
+            valueFiles:
+              - $values/helm/values/vi-prod/tenant-1/{{"{{"}}name{{"}}"}}/values.yaml
+              - $values/helm/values/vi-prod/tenant-1/{{"{{"}}name{{"}}"}}/version.yaml
+              - $values/helm/values/vi-prod/tenant-1/{{"{{"}}name{{"}}"}}/secrets.enc.yaml
+              - $values/helm/values/vi-prod/tenant-1/{{"{{"}}name{{"}}"}}/env.yaml
+          repoURL: "https://gitlab.apptrium.io/api/v4/projects/630/packages/helm/stable"
+          targetRevision: 9.0.*
+        - ref: values
+          repoURL: "https://github.com/gmukhigulashvili/devops-assignment.git"
+          targetRevision: master
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: vi-dev

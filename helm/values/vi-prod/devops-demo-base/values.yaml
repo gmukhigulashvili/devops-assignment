@@ -1,10 +1,4 @@
 ---
-name: devops-demo
-namespace: vi-dev
-contour: vi-dev
-hostsuffix: vi-dev
-version: REPLACE
-
 imagePullSecrets:
   - name: gitlab-registry
 
