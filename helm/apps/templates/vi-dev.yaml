@@ -33,7 +33,7 @@ spec:
               - $values/helm/values/vi-dev/{{"{{"}}name{{"}}"}}/version.yaml
               - $values/helm/values/vi-dev/{{"{{"}}name{{"}}"}}/secrets.enc.yaml
           repoURL: "https://gitlab.apptrium.io/api/v4/projects/630/packages/helm/stable"
-          targetRevision: 1.5.*
+          targetRevision: 9.0.*
         - ref: values
           repoURL: "https://github.com/gmukhigulashvili/devops-assignment.git"
           targetRevision: master
