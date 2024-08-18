@@ -15,8 +15,6 @@ groups:
         strategyType: RollingUpdate
         reloader: true
         image: 511262863790.dkr.ecr.us-west-2.amazonaws.com/dev-vi-ecr
-        secret:
-          CacheSync__ConfigMapNamespace: iam
         targetport: 3000
         dapr:
           enabled: false
