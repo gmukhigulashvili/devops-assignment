@@ -12,7 +12,6 @@ groups:
   main:
     apps:
       devops-demo:
-        replicas: 2
         podAntiAffinity:
           app: devops-demo
         securityContext:
