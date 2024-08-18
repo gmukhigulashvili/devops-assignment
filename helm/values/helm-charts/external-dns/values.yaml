@@ -13,3 +13,7 @@ extraVolumeMounts:
   - name: aws-credentials
     mountPath: /etc/aws/credentials
     readOnly: true
+
+extraArgs:
+  - --domain-filter=chene-factory.com
+  - --aws-zone-type=public
