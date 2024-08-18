@@ -27,7 +27,7 @@ ingress:
   # Routing rules
   rules:
     devops-demo:
-      host: devops-demo.chene-factory.com
+      host: devops-demo.chene-factory.store
       cors:
         enabled: true
         allowOrigin: "*"
@@ -41,7 +41,7 @@ ingress:
             port: 3000
             namespace: vi-dev
     devops-demo-2:
-      host: devops-demo-2.chene-factory.com
+      host: devops-demo-2.chene-factory.store
       cors:
         enabled: true
         allowOrigin: "*"

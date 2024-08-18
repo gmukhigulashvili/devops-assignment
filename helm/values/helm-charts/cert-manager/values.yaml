@@ -1,6 +1,13 @@
 ---
 installCRDs: true
 
+
+extraArgs:
+  - --enable-certificate-owner-ref=true
+  - --dns01-recursive-nameservers-only
+  - --dns01-recursive-nameservers=8.8.8.8:53,4.2.2.2:53
+
+
 resources:
   requests:
     cpu: 10m
