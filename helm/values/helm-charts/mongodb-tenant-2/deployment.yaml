@@ -1,5 +1,5 @@
 ---
-name: mongodb-tenant- 1
+name: mongodb-tenant-2
 namespace: service
 repoURL: https://charts.bitnami.com/bitnami
 targetRevision: 15.6.19
