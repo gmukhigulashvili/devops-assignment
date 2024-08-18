@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/gmukhigulashvili/devops-assignment.git
         revision: master
         files:
-          - path: "helm/values/vi-prod/tenant-1/**/values.yaml"
+          - path: "helm/values/vi-prod/tenant-1/**/env.yaml"
   template:
     metadata:
       name: '{{"{{"}}name{{"}}"}}'
@@ -40,4 +40,4 @@ spec:
           targetRevision: master
       destination:
         server: https://kubernetes.default.svc
-        namespace: vi-dev
+        namespace: vi-prod-tenant-1
