@@ -6,8 +6,6 @@ groups:
   main:
     apps:
       devops-demo:
-        podAntiAffinity:
-          app: devops-demo
         securityContext:
           runAsUser: 1002
           runAsGroup: 1002
