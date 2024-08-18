@@ -39,22 +39,6 @@ controller:
   containerPort:
     http: 80
     https: 443
-  # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config:
-    log-level: "debug"
-    enable-opentelemetry: "true"
-    opentelemetry-operation-name: "HTTP $request_method $service_name $uri"
-    opentelemetry-trust-incoming-span: "true"
-    otlp-collector-host: "opentelemetry-collector.service.svc:4317"
-    otlp-collector-port: "4317"
-    otel-max-queuesize: "2048"
-    otel-schedule-delay-millis: "5000"
-    otel-max-export-batch-size: "512"
-    otel-service-name: "icp-dev-external-nginx" # Opentelemetry resource name
-    otel-sampler: "AlwaysOn" # Also: AlwaysOff, TraceIdRatioBased
-    otel-sampler-ratio: "1.0"
-    otel-sampler-parent-based: "true"
-  # -- Annotations to be added to the controller config configuration configmap.
   configAnnotations: {}
   # -- Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/main/docs/examples/customization/custom-headers
   proxySetHeaders: {}
@@ -435,7 +419,9 @@ controller:
     ##
     appProtocol: true
     annotations:
-      service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /healthz
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
     labels: {}
     # clusterIP: ""
 
