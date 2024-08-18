@@ -11,6 +11,7 @@ spec:
         revision: master
         files:
           - path: "helm/values/vi-prod/tenant-1/**/env.yaml"
+          - path: "helm/values/vi-prod/tenant-1/**/values.yaml"
   template:
     metadata:
       name: '{{"{{"}}name{{"}}"}}'
