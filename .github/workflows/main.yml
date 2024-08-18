@@ -60,18 +60,14 @@ jobs:
         docker push $ECR_REGISTRY/dev-vi-ecr:latest
         docker push $ECR_REGISTRY/dev-vi-ecr:$IMAGE_TAG     
 
-    - name: Clone vi-values repository
-      env:
-        PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    - name: Update version.yaml
       run: |
-        cd helm/values/vi-dev/devops-demo
-        echo "version: ${{ github.sha }}" > version.yaml
+        echo "version: ${{ github.sha }}" > helm/values/vi-dev/devops-demo/version.yaml
 
     - name: Commit and push changes
       run: |
-        cd helm
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add .
+        git add helm/values/vi-dev/devops-demo/version.yaml
         git commit -m "Update version.yaml with commit SHA ${{ github.sha }}"
         git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/devops-assignment.git HEAD:main
