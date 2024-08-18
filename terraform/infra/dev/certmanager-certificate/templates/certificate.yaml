@@ -1,0 +1,28 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: giorgi@vi.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-route53-account-key
+    solvers:
+    - dns01:
+        route53:
+          region: eu-central-1
+          hostedZoneID: Z09380132AYD19XFENINN
+          # The access credentials for AWS Route 53 are stored in a secret
+          accessKeyIDSecretRef:
+            name: aws-route53-credentials
+            key: aws_access_key_id
+          secretAccessKeySecretRef:
+            name: aws-route53-credentials
+            key: aws_secret_access_key
+      selector:
+        dnsZones:
+        - chene-factory.com

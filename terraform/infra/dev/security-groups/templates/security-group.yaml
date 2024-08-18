@@ -1,0 +1,47 @@
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: devops-demo-sg-policy
+  namespace: vi-dev
+spec:
+  podSelector:
+    matchLabels:
+      app: devops-demo
+  securityGroups:
+    groupIds:
+      - sg-0123456789abcdef0
+
+---
+
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: mongo-sg-policy
+  namespace: mongo-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: mongo
+  securityGroups:
+    groupIds:
+      - sg-0987654321abcdef0 
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-devops-demo-to-mongo
+  namespace: mongo-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: mongo
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: devops-demo
+    ports:
+    - protocol: TCP
+      port: 27017 
