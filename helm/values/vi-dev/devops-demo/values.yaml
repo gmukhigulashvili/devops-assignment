@@ -26,9 +26,9 @@ groups:
           enabled: false
         probes: true
         probe:
-          liveness: /ping
-          readiness: /health
-          startup: /health
+          liveness: /
+          readiness: /
+          startup: /
         resources:
           requests:
             cpu: 250m
