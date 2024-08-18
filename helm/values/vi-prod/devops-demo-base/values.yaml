@@ -14,7 +14,7 @@ groups:
           fsGroup: 1002
         strategyType: RollingUpdate
         reloader: true
-        image: 511262863790.dkr.ecr.us-west-2.amazonaws.com/dev-vi-ecr
+        image: 851725552187.dkr.ecr.eu-central-1.amazonaws.com/dev-vi-ecr
         targetport: 3000
         dapr:
           enabled: false
