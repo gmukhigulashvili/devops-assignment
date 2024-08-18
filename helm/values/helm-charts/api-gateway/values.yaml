@@ -40,3 +40,17 @@ ingress:
             name: devops-demo
             port: 3000
             namespace: vi-dev
+    devops-demo-2:
+      host: devops-demo-2.chene-factory.com
+      cors:
+        enabled: true
+        allowOrigin: "*"
+      authorizer:
+        enabled: false
+      paths:
+        root:
+          path: /
+          service:
+            name: devops-demo
+            port: 3000
+            namespace: vi-dev
