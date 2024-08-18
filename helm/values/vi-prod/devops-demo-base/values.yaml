@@ -1,11 +1,4 @@
 ---
-name: tenant-1-demo
-namespace: vi-prod-tenant-1
-contour: vi-prod
-hostsuffix: vi-prod
-version: latest
-
-
 imagePullSecrets:
   - name: gitlab-registry
 
