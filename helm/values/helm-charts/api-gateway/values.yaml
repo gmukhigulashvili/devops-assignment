@@ -27,7 +27,7 @@ ingress:
   # Routing rules
   rules:
     devops-demo-3:
-      host: devops-demo-3.chene-factory.store
+      host: devops-demo-3.chene-factory.com
       cors:
         enabled: true
         allowOrigin: "*"
