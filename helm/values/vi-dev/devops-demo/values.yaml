@@ -34,11 +34,11 @@ groups:
           startup: /orders
         resources:
           requests:
-            cpu: 250m
-            memory: 500Mi
+            cpu: 150m
+            memory: 200Mi
           limits:
-            cpu: 500m
-            memory: 500Mi
+            cpu: 200m
+            memory: 300Mi
 serviceAccount:
   enabled: true
   permissions:
