@@ -12,6 +12,10 @@ groups:
   main:
     apps:
       devops-demo:
+        securityContext:
+          runAsUser: 1002
+          runAsGroup: 1002
+          fsGroup: 1002
         strategyType: RollingUpdate
         reloader: true
         image: 511262863790.dkr.ecr.us-west-2.amazonaws.com/dev-vi-ecr
