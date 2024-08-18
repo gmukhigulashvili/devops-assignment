@@ -26,8 +26,9 @@ groups:
           enabled: false
         probes: true
         probe:
-          liveness: /
-          readiness: /
+          liveness: /orders
+          readiness: /orders
+          startup: /orders
         resources:
           requests:
             cpu: 250m
