@@ -1,3 +1,9 @@
 node_modules/
 /.idea/*
 .DS_Store
+
+# Ignore all decrypted secrets files
+*.decrypted~secrets.enc.yaml
+
+# Ignore Terragrunt cache files
+.terragrunt-cache/
