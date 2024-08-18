@@ -72,6 +72,6 @@ jobs:
         cd helm
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add app1/version.yaml
+        git add .
         git commit -m "Update version.yaml with commit SHA ${{ github.sha }}"
         git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/devops-assignment.git HEAD:main
