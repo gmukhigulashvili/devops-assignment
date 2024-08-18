@@ -1,0 +1,42 @@
+---
+fullnameOverride: api-gateway
+
+ingress:
+  enabled: true
+
+  # Default annotations
+  annotations: {}
+
+  # Default ingress class name
+  className: nginx-external
+
+  # Default TLS settings
+  tls:
+    enabled: true
+    cluster_issuer: letsencrypt-prod
+
+  # Default authorizer
+  authorizer:
+    uri: http://iam-authorizer.iam.svc.cluster.local:5000/authorize
+
+  # Default backend
+  service:
+    name: nginx-ingress
+    port: 80
+
+  # Routing rules
+  rules:
+    devops-demo:
+      host: devops-demo.chene-factory.com
+      cors:
+        enabled: true
+        allowOrigin: "*"
+      authorizer:
+        enabled: false
+      paths:
+        root:
+          path: /
+          service:
+            name: devops-demo
+            port: 3000
+            namespace: vi-dev

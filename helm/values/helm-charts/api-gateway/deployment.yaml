@@ -1,0 +1,6 @@
+---
+name: api-gateway
+namespace: service
+repoURL: https://gitlab.apptrium.io/api/v4/projects/886/packages/helm/stable
+targetRevision: 0.4.*
+chart: app-gateway-chart
