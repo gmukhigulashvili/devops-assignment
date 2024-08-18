@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - master
-
+    paths-ignore:
+      - 'helm/**'
+      
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -62,15 +64,14 @@ jobs:
       env:
         PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
-        git clone https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/vi-values.git
-        cd vi-values/app1
+        cd helm/values/vi-dev/devops-demo
         echo "version: ${{ github.sha }}" > version.yaml
 
     - name: Commit and push changes
       run: |
-        cd vi-values
+        cd helm
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add app1/version.yaml
         git commit -m "Update version.yaml with commit SHA ${{ github.sha }}"
-        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/vi-values.git HEAD:main
+        git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/gmukhigulashvili/devops-assignment.git HEAD:main
