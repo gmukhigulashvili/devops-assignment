@@ -1,5 +1,4 @@
 ---
-name: vi-tenant-1-pull-secret
 contour: vi-dev
 hostsuffix: vi-dev
 namespace: vi-prod-tenant-1
