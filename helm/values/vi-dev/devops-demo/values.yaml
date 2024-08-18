@@ -28,6 +28,7 @@ groups:
         probe:
           liveness: /
           readiness: /
+          startup: /
         resources:
           requests:
             cpu: 250m
