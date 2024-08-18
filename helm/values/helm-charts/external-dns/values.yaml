@@ -4,16 +4,16 @@ env:
   - name: AWS_DEFAULT_REGION
     value: eu-central-1 # change to region where EKS is installed
   - name: AWS_SHARED_CREDENTIALS_FILE
-    value: /etc/aws/credentials/my_credentials
+    value: /.aws/credentials
 extraVolumes:
   - name: aws-credentials
     secret:
       secretName: external-dns 
 extraVolumeMounts:
   - name: aws-credentials
-    mountPath: /etc/aws/credentials
+    mountPath: /.aws
     readOnly: true
 
 extraArgs:
-  - --domain-filter=chene-factory.com
+  - --domain-filter=chene-factory.com 
   - --aws-zone-type=public
